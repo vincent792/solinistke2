@@ -1,0 +1,108 @@
+<!-- blog/templates/blog/post_list.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="container">
+          <h2>Find Jobs</h2>
+
+            <div class="form-group d-flex justify-content-center text-center">
+              <form method="get">
+                <select class="form-control-sm" name="category">
+                  <option value="" {% if not category_id %}selected{% endif %}>All Categories</option>
+                  {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == category_id %}selected{% endif %}>{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+                <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+              </form>
+            </div>
+          </div>
+          
+        
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Pricing Section ======= -->
+    <section id="pricing" class="pricing">
+      <div class="container">
+
+        <div class="row">
+          {% for p in posts %}
+
+       
+          <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
+            <div class="box featured">
+              <h3>{{p.company_name}}</h3>
+              
+              <img class="img-fluid" src="{{p.image.url}}" alt="">
+
+              <h4><sup>ksh</sup>{{p.price_range}}k<span> / month</span></h4>
+              {% if p.decription %}
+              <h6 style="text-align: left; font-weight: bold; text-transform: uppercase;text-decoration:underline;" >Application:</h6>
+              <p style="text-align: left; font-style: italic;">{{p.decription}} </p>
+              {% endif %}
+              {% if p.vacancy %}
+              <h6 style="text-align: left; font-weight: bold; text-transform: uppercase;text-decoration:underline;" >Vacancy:</h6>
+              <ul style="text-align: left; font-style: italic;">
+                {% for  v in  vacancy_list %}
+                <li>{{v}}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+
+              {% if p.attributes %}
+              <h6 style="text-align: left; font-weight: bold; text-transform: uppercase;text-decoration:underline;" >attributes:</h6>
+              <ul style="text-align: left;font-style: italic;">
+                {% for  a in  attributes_list %}
+                <li>{{a}}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+
+              <h6 style="text-align: left; font-weight: bold; text-transform: uppercase; text-decoration: underline; display: inline-block; margin-right: 10px;">Deadline:</h6>
+              <span>{{ p.deadline|date:"d-m-Y" }}</span>
+              
+              {% if not  request.user.account.is_activated %}
+              <div class="btn-wrap">
+                <a href="{% url 'activate'  %}" class="btn-buy">How To Apply</a>
+              </div>
+              {% else %}
+
+              <div class="btn-wrap">
+                <a href="{% url 'post_detail' p.pk %}" class="btn-buy">Continue</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% endfor %}
+
+         
+
+         
+
+        </div>
+
+      </div>
+    </section><!-- End Pricing Section -->
+
+   
+ 
+ 
+ 
+ 
+  
+{% endblock %}
+
+
+

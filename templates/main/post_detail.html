@@ -1,0 +1,137 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+  
+    
+    <a href="{% url 'post_list' %}">Back to Post List</a>
+  </div>
+  {% if  request.user.username == post.author %}
+  <a href="{% url 'post_edit' post.pk %}">Edit Post</a>
+  <a href="{% url 'post_delete' post.pk %}">Delete Post</a>
+  {% endif %}
+
+
+  <div class="row">
+    {% for p in posts %}
+
+ 
+
+        
+        {% if p.vacancy %}
+        <h6 style="text-align: left; font-weight: bold; text-transform: uppercase;text-decoration:underline;" >Vacancy:</h6>
+        <ul style="text-align: left; font-style: italic;">
+          {% for  v in  vacancy_list %}
+          <li>{{v}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if p.attributes %}
+        <h6 style="text-align: left; font-weight: bold; text-transform: uppercase;text-decoration:underline;" >attributes:</h6>
+        <ul style="text-align: left;font-style: italic;">
+          {% for  a in  attributes_list %}
+          <li>{{a}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <h6 style="text-align: left; font-weight: bold; text-transform: uppercase; text-decoration: underline; display: inline-block; margin-right: 10px;">Deadline:</h6>
+        <span>{{ p.deadline|date:"d-m-Y" }}</span>
+        
+    
+      </div>
+    </div>
+{% endfor %}
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+
+                <div class="swiper-slide">
+                  <img src="{{post.image.url}}" alt="">
+                </div>
+
+               
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3>Job information</h3>
+              <ul>
+                <li><strong>Company</strong>: {{post.company_name}}</li>
+                <li><strong>Category</strong>: {{post.category}}</li>
+                <li><strong>Salary</strong>: <sup style="color: red; font-weight: bold;">ksh</sup>{{post.price_range}}k<span> / month</span></li>
+                <li><strong>Deadline</strong>: {{ post.deadline|date:"d-m-Y" }}</li>
+                <li><strong>Location</strong>: {{post.location}}</li>
+                <li><strong>Job URL</strong>: <a style="font-weight: bold; text-decoration: underline;" href="{{ post.url}}">CLICK TO APPLY</a></li>
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              {% if post.decription %}
+              <h2>Description</h2>
+              <p>
+              {{post.decription}}
+              </p>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="row gy-4">
+
+          <div class="col">
+            <div class="portfolio-info">
+              {% if post.vacancy %}
+              <h3>Vaccancies</h3>
+              <ul style="text-align: left; font-style: italic;">
+                {% for vacancy in vacancy_list %}
+
+                <li><strong>{{vacancy}}</strong></li>
+                {% endfor %}
+                
+                
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+
+
+          <div class="col">
+            <div class="portfolio-info">
+              {% if post.attributes %}
+              <h3>Attributes</h3>
+              <ul style="text-align: left; font-style: italic;">
+                {% for a in attribute_list %}
+
+                <li><strong>{{a}}</strong></li>
+                {% endfor %}
+                
+                
+              </ul>
+              {% endif %}
+            </div>
+          
+            
+          </div>
+        </div>
+
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+{% endblock %}

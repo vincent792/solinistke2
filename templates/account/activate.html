@@ -1,0 +1,49 @@
+<!-- blog/templates/blog/activate.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow " style="max-width: 400px;" >
+        <img class="card-img-top" src="holder.js/100x180/" alt="">
+        <div class="card-body">
+          <h4 class="card-title">Title</h4>
+          <p class="card-text">
+            <ol>
+              <li>To access the jobs portal, you must have an activated account.</li>
+              <li>Account activation costs Ksh 250 only.</li>
+              <li>Simply click the "Pay Now" button below.</li>
+              <li>An M-Pesa prompt will appear.</li>
+              <li>Once paid, click the "Activate" button again.</li>
+              <li>Copy the M-Pesa transaction code.</li>
+              <li>Paste the transaction code in the empty field.</li>
+              <li>Then submit your request.</li>
+              <li>It takes approximately 24 hours for your account to be activated.</li>
+            </ol>
+
+          </p>
+          <div class="row">
+            <div class="col text-center">
+              <a href="" class="btn btn-primary btn-sm">Pay Now</a>
+              <a href="{% url 'activate1' %}" class="btn btn-success btn-sm">Activate</a>
+            </div>
+            
+
+
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <h1>Account Activation</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="activation_code">Activation Code:</label>
+    <input type="text" id="activation_code" name="activation_code" required><br>
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!-- blog/templates/blog/post_create.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Post</h1>
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Title" required><br>
+    <textarea name="content" placeholder="Content" required></textarea><br>
+    <select name="category" required>
+      <option value="" disabled selected>Select Category</option>
+      {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select><br>
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
